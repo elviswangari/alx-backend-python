@@ -4,7 +4,7 @@ Unit test and Integration tests
 '''
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from unittest.mock import patch, Mock
 
 
@@ -53,6 +53,26 @@ class TestGetJson(unittest.TestCase):
         with patch('requests.get', return_value=response):
             responses = get_json(url)
             self.assertEqual(responses, expected)
+
+
+class TestMemoize(unittest.TestCase):
+    '''
+    test memoize function class
+    '''
+    def test_memoize(self):
+        '''
+        test memoize method
+        '''
+        class TestClass:
+            '''subclass of test_memoize'''
+            def a_method(self):
+                '''return 42'''
+                return 42
+
+            @memoize
+            def a_property(self):
+                '''set a method'''
+                return self.a_method()
 
 
 if __name__ == "__main__":
