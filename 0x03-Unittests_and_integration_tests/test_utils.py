@@ -52,7 +52,7 @@ class TestGetJson(unittest.TestCase):
         response.json.return_value = expected
         with patch('requests.get', return_value=response):
             responses = get_json(url)
-            self.assertEqual(responses. expected)
+            self.assertEqual(responses, expected)
 
 
 if __name__ == "__main__":
