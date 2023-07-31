@@ -4,7 +4,8 @@ Unit test and Integration tests
 '''
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map
+from utils import access_nested_map, get_json
+from unittest.mock import patch, Mock
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -33,6 +34,25 @@ class TestAccessNestedMap(unittest.TestCase):
         '''
         with self.assertRaises(expected):
             access_nested_map(nested_map, path)
+
+
+class TestGetJson(unittest.TestCase):
+    '''
+    test class for get json
+    '''
+    @parameterized.expand([
+        ('http://example.com', {'payload': True}),
+        ('http://holberton.io', {'payload': False})
+        ])
+    def test_get_json(self, url, expected):
+        '''
+        test method for the get json
+        '''
+        response = Mock()
+        response.json.return_value = expected
+        with patch('request.get', return_value=response):
+            responses = get_json(url)
+            self.assertEqual(responses. expected)
 
 
 if __name__ == "__main__":
